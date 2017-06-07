@@ -11,7 +11,7 @@ def agregar_usuario(user_name):
 def agregar_deuda(deudor_name, prestador_name, monto):
     deuda = obtener_deuda(prestador_name, deudor_name)
     if len(deuda) == 1:
-        nueva_deuda = deuda[0] + monto
+        nueva_deuda = deuda[0][2] + monto
         query = "UPDATE deuda SET monto=%d WHERE prestadorName='%s' AND deudorName='%s';" %(nueva_deuda, prestador_name, deudor_name)
         return db.insert(query)
     else:
@@ -21,7 +21,7 @@ def agregar_deuda(deudor_name, prestador_name, monto):
 def pagar_deuda(deudor_name, prestador_name, monto):
     deuda = obtener_deuda(prestador_name, deudor_name)
     if len(deuda) == 1:
-        nueva_deuda = deuda[0] - monto
+        nueva_deuda = deuda[0][2] - monto
         if (nueva_deuda <= 0):
             query = "DELETE FROM deuda WHERE prestadorName='%s' AND deudorName='%s';" % (prestador_name, deudor_name)
         else:
