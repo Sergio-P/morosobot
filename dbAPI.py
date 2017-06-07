@@ -31,7 +31,7 @@ def pagar_deuda(deudor_name, prestador_name, monto):
         return -1
         
 def obtener_deuda(prestador_name, deudor_name):
-    query = "SELECT monto FROM deuda WHERE prestadorName='%s' AND deudorName='%s';" % (pretador_name, deudor_name)
+    query = "SELECT monto FROM deuda WHERE prestadorName='%s' AND deudorName='%s';" % (prestador_name, deudor_name)
     return db.get(query)
     
 def consultar_deuda(deudor_name):
