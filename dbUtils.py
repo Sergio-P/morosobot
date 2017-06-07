@@ -6,7 +6,16 @@ try:
     cur = con.cursor()
 except lite.Error, e:
     print "Error %s" % e.args[0]
+    
+def insert(query):
+    assert(query.startswith("INSERT ") or query.startswith("insert "))
+    try:
+        cur.execute(query)
+    except lite.Error, e:
+        return -1
+    return 0
 
-def query(q):
-    cur.execute(q)
+def get(query):
+    assert(query.startswith("SELECT ") or query.startswith("select "))
+    cur.execute(query)
     return cur.fetchall()
