@@ -1,5 +1,6 @@
 from config import bot
 from dbAPI import *
+from msUtils import splitMessage
 import telebot
 
 
