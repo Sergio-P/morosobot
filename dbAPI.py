@@ -22,7 +22,7 @@ def pagar_deuda(deudor_name, prestador_name, monto):
     deuda = obtener_deuda(prestador_name, deudor_name)
     if len(deuda) == 1:
         nueva_deuda = deuda[0] - monto
-        if (nueva deuda <= 0):
+        if (nueva_deuda <= 0):
             query = "DELETE FROM deuda WHERE prestadorName='%s' AND deudorName='%s';" % (prestador_name, deudor_name)
         else:
             query = "UPDATE deuda SET monto=%d WHERE prestadorName='%s' AND deudorName='%s';" %(nueva_deuda, prestador_name, deudor_name)
