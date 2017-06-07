@@ -1,6 +1,6 @@
 
 
-def splitMessage(message):
+def split_message(message):
 	#: string -> string, int
 	messageList = message.split(" ")
 	if (len(messageList) != 3):

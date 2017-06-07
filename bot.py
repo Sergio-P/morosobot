@@ -1,6 +1,8 @@
+# -*- coding: utf-8 -*-
+
 from config import bot
 from dbAPI import *
-from msUtils import splitMessage
+from msUtils import split_message
 import telebot
 
 
@@ -12,11 +14,14 @@ def send_welcome(message):
 @bot.message_handler(commands=['pagar'])
 def pagar_handler(message):
 	try:
-		name, monto = splitMessage(message.text)
+		name, monto = split_message(message.text)
 		if not existe_usuario(name):
 			agregar_usuario(name)
-		pagar_deuda(message.from_user.username, name, monto)
-		bot.reply_to(message, "ACK")
+		r = pagar_deuda(message.from_user.username, name, monto)
+		if r == -1:
+			bot.reply_to(message, u"No hay deudas m3n")
+		else:
+			bot.reply_to(message, u"👌")
 	except Exception:
 		bot.reply_to(message, "Mensaje incorrecto")
 
@@ -24,11 +29,11 @@ def pagar_handler(message):
 @bot.message_handler(commands=['meDebe'])
 def me_debe_handler(message):
 	try:
-		name, monto = splitMessage(message.text)
+		name, monto = split_message(message.text)
 		if not existe_usuario(name):
 			agregar_usuario(name)
 		agregar_deuda(name, message.from_user.username, monto)
-		bot.reply_to(message, "ACK")
+		bot.reply_to(message, u"👌")
 	except Exception as e:
 		print e
 		bot.reply_to(message, "Mensaje incorrecto")
@@ -37,18 +42,18 @@ def me_debe_handler(message):
 @bot.message_handler(commands=['leDebo'])
 def le_debo_handler(message):
 	deudas = consultar_deuda(message.from_user.username)
-	builder = ""
+	builder = "Deudas de @%s:\n" % message.from_user.username
 	for deuda in deudas:
-		pass
+		builder += "A %s le debe $%d\n" % (deuda[0], deuda[2])
 	bot.reply_to(message, builder)
 
 
 @bot.message_handler(commands=['paguenCTM'])
 def paguen_ctm_handler(message):
 	deudas = consultar_deudores(message.from_user.username)
-	builder = "Deudas:\n"
+	builder = "Deudas a @%s:\n" % message.from_user.username
 	for deuda in deudas:
-		builder += str(deuda) + "\n"
+		builder += "%s debe $%d\n" % (deuda[1], deuda[2])
 	bot.reply_to(message, builder)
 
 
@@ -59,4 +64,3 @@ def all_handler(message):
 
 
 bot.polling()
-
