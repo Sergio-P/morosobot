@@ -27,9 +27,10 @@ def me_debe_handler(message):
 		name, monto = splitMessage(message.text)
 		if not existe_usuario(name):
 			agregar_usuario(name)
-		agregar_deuda(message.from_user.username, name, monto)
+		agregar_deuda(name, message.from_user.username, monto)
 		bot.reply_to(message, "ACK")
-	except Exception:
+	except Exception as e:
+		print e
 		bot.reply_to(message, "Mensaje incorrecto")
 
 
@@ -45,9 +46,9 @@ def le_debo_handler(message):
 @bot.message_handler(commands=['paguenCTM'])
 def paguen_ctm_handler(message):
 	deudas = consultar_deudores(message.from_user.username)
-	builder = ""
+	builder = "Deudas:\n"
 	for deuda in deudas:
-		pass
+		builder += str(deuda) + "\n"
 	bot.reply_to(message, builder)
 
 
