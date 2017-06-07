@@ -102,3 +102,4 @@ ENV/
 
 # custom
 config.py
+morosobot.db
