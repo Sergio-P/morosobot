@@ -8,7 +8,7 @@ except lite.Error, e:
     print "Error %s" % e.args[0]
     
 def insert(query):
-    assert(query.startswith("INSERT ") or query.startswith("insert "))
+    #assert(query.startswith("INSERT ") or query.startswith("insert "))
     try:
         cur.execute(query)
         con.commit()
