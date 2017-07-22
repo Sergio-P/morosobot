@@ -3,6 +3,7 @@
 from config import bot
 from dbAPI import *
 from msUtils import split_message
+from grafo import construir_grafo
 import telebot
 
 
@@ -63,8 +64,8 @@ def paguen_ctm_handler(message):
 
 @bot.message_handler(commands=['all'])
 def all_handler(message):
-	print message
-	bot.reply_to(message, "Wena m3n aun no somos tan pro")
+	construir_grafo()
+	bot.send_photo(message, "network.png")
 
 
 bot.polling()

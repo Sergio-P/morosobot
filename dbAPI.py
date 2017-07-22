@@ -51,3 +51,6 @@ def obtener_usuarios():
     query = "SELECT * from user;"
     return db.get(query)
     
+def obtener_deudas():
+    query = "SELECT * from deuda;"
+    return db.get(query)
