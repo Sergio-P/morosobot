@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import os
 from config import bot
 from dbAPI import *
 from msUtils import split_message
@@ -65,7 +66,19 @@ def paguen_ctm_handler(message):
 @bot.message_handler(commands=['all'])
 def all_handler(message):
 	construir_grafo()
-	bot.send_photo(message, "network.png")
+	f = open("network.png")
+	bot.send_photo(message.chat.id, f)
 
 
-bot.polling()
+# bot.polling()
+with open("PID","w") as f:
+ 	f.write(str(os.getpid())+"\n")
+
+c = 0
+ 
+while c<50:
+	try:
+		bot.polling()
+	except:
+		c += 1
+ 		print "uff m3n"
