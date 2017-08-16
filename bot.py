@@ -2,7 +2,7 @@
 
 from config import bot
 from dbAPI import *
-from msUtils import split_message
+from msUtils import split_message, split_message_multiple
 from grafo import construir_grafo
 import telebot
 
@@ -34,10 +34,11 @@ def pagar_handler(message):
 @bot.message_handler(commands=['meDebe', 'medebe'])
 def me_debe_handler(message):
 	try:
-		name, monto = split_message(message.text)
-		if not existe_usuario(name):
-			agregar_usuario(name)
-		agregar_deuda(name, '@' + message.from_user.username, monto)
+		names, monto = split_message_multiple(message.text)
+		for name in names:
+			if not existe_usuario(name):
+				agregar_usuario(name)
+			agregar_deuda(name, '@' + message.from_user.username, monto)
 		bot.reply_to(message, u"👌")
 	except Exception as e:
 		print e
@@ -65,7 +66,8 @@ def paguen_ctm_handler(message):
 @bot.message_handler(commands=['all'])
 def all_handler(message):
 	construir_grafo()
-	bot.send_photo(message, "network.png")
+	f = open("network.png")
+	bot.send_photo(message.chat.id, f)
 
 
 bot.polling()
