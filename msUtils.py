@@ -7,6 +7,8 @@ def split_message(message):
 		raise Exception('input wrong')
 
 	nombre = messageList[1]
+	if len(nombre) == 0 or nombre[0] != "@":
+		raise Exception("input wrong")
 	monto = 0
 	try:
 		monto = int(messageList[2])
@@ -22,6 +24,11 @@ def split_message_multiple(message):
 		raise Exception('input wrong')
 
 	nombres = messageList[1:-1]
+
+	for nombre in nombres:
+		if len(nombre) == 0 or nombre[0] != "@":
+			raise Exception("input wrong")
+
 	monto = 0
 	try:
 		monto = int(messageList[-1])
