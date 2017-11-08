@@ -103,3 +103,5 @@ ENV/
 # custom
 config.py
 morosobot.db
+PID
+network.png
