@@ -4,7 +4,7 @@ import os
 from config import bot
 from dbAPI import *
 from msUtils import split_message, split_message_multiple
-from grafo import construir_grafo
+from grafo import *
 import telebot
 
 
@@ -66,7 +66,7 @@ def paguen_ctm_handler(message):
 
 @bot.message_handler(commands=['all'])
 def all_handler(message):
-	construir_grafo()
+	buildGraph()
 	f = open("network.png")
 	bot.send_photo(message.chat.id, f)
 

@@ -2,9 +2,10 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import networkx as nx
+from igraph import *
 from dbAPI import obtener_usuarios, obtener_deudas
 
-
+## Grafo construido con libreria NetworkX
 def construir_grafo():
 	G = nx.DiGraph()
 
@@ -27,3 +28,42 @@ def construir_grafo():
 	nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels)
 	plt.axis("off")
 	plt.savefig("network.png")
+
+
+## Draw a graph with igraph.
+def buildGraph():
+	## Create new directed graph.
+	g = Graph(directed=True)
+
+	usuarios = {}
+
+	deudas = obtener_deudas()
+	for deuda in deudas:
+		if not deuda[0] in usuarios:
+			g.add_vertex(deuda[0], color = "#3FE92C")
+			usuarios[deuda[0]] = True
+		if not deuda[1] in usuarios:
+			g.add_vertex(deuda[1], color = "#3FE92C")
+			usuarios[deuda[1]] = True
+		g.add_edge(deuda[1], deuda[0], weight=deuda[2])
+		g.vs[g.vs.find(deuda[1]).index]['color'] = '#FF3333'
+
+	g.vs['label'] = g.vs['name']
+	g.es['label'] = g.es['weight']
+	visual_style = {}
+	visual_style['vertex_size'] = 30
+	visual_style['vertex_label_dist'] = 0
+	visual_style['vertex_label_size'] = 10
+	visual_style['edge_arrow_size'] = 1
+	visual_style['edge_label_angle'] = 180
+	visual_style['edge_label_dist'] = 0
+	visual_style['edge_label_size'] = 8
+	visual_style['layout'] = g.layout('circle')
+	visual_style['autocurve'] = True
+	visual_style['bbox'] = (300,300)
+	visual_style['margin'] = 40
+
+	#out = plot(g, 'network.png', **visual_style)
+	#out.save('network.png')
+	plot(g, 'network.png', **visual_style)
+
