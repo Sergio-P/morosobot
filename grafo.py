@@ -2,7 +2,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import networkx as nx
-from igraph import *
+import igraph as ig
 from dbAPI import obtener_usuarios, obtener_deudas
 
 ## Grafo construido con libreria NetworkX
@@ -33,20 +33,20 @@ def construir_grafo():
 ## Draw a graph with igraph.
 def buildGraph():
 	## Create new directed graph.
-	g = Graph(directed=True)
+	g = ig.Graph(directed=True)
 
 	usuarios = {}
 
 	deudas = obtener_deudas()
 	for deuda in deudas:
 		if not deuda[0] in usuarios:
-			g.add_vertex(deuda[0], color = "#3FE92C")
+			g.add_vertex(deuda[0], color = "#8BC34A")
 			usuarios[deuda[0]] = True
 		if not deuda[1] in usuarios:
-			g.add_vertex(deuda[1], color = "#3FE92C")
+			g.add_vertex(deuda[1], color = "#8BC34A")
 			usuarios[deuda[1]] = True
 		g.add_edge(deuda[1], deuda[0], weight=deuda[2])
-		g.vs[g.vs.find(deuda[1]).index]['color'] = '#FF3333'
+		g.vs[g.vs.find(deuda[1]).index]['color'] = '#F44336'
 
 	g.vs['label'] = g.vs['name']
 	g.es['label'] = g.es['weight']
@@ -65,5 +65,4 @@ def buildGraph():
 
 	#out = plot(g, 'network.png', **visual_style)
 	#out.save('network.png')
-	plot(g, 'network.png', **visual_style)
-
+	ig.plot(g, 'network.png', **visual_style)
