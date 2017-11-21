@@ -105,3 +105,4 @@ config.py
 morosobot.db
 PID
 network.png
+log.txt
