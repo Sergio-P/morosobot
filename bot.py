@@ -76,10 +76,14 @@ with open("PID","w") as f:
  	f.write(str(os.getpid())+"\n")
 
 c = 0
- 
+
 while c<50:
 	try:
 		bot.polling()
-	except:
+	except Exception as e:
 		c += 1
- 		print "uff m3n"
+		print "uff m3n"
+		with open("log.txt","a") as f:
+			f.write("Error " + c + "\n");
+			f.write(e + "\n");
+			f.write("----------\n");
