@@ -84,6 +84,6 @@ while c<50:
 		c += 1
 		print "uff m3n"
 		with open("log.txt","a") as f:
-			f.write("Error " + c + "\n");
-			f.write(e + "\n");
+			f.write("Error " + str(c) + "\n");
+			f.write(str(e) + "\n");
 			f.write("----------\n");
